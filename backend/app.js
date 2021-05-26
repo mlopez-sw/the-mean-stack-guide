@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const postsRoutes = require("./routes/posts");
+const path = require("path");
 
 const app = express();
 
@@ -29,6 +30,9 @@ app.use(
     extended: false,
   })
 );
+// allow requests to image folder (otherwise its forbidden)
+// make sure that req to images are forwarded to backend/images
+app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
